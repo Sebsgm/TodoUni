@@ -1,179 +1,86 @@
-# 🎓 TODOUNI
+# TODOUNI
 
-App universitaria para crear horarios visuales y calcular notas.  
-Construida con **React + Vite**. Sin backend, sin login. Todo se guarda en `localStorage`.
+Aplicación web para estudiantes universitarios que permite construir horarios semanales visuales y hacer seguimiento de notas por materia. No requiere cuenta ni conexión a internet — todo corre en el navegador.
 
----
-
-## 📁 Estructura del proyecto
-
-```
-todouni/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── components/
-│   │   ├── CalendarGrid.jsx   ← Vista estilo Google Calendar (franjas de 30 min)
-│   │   ├── Navbar.jsx
-│   │   └── SubjectForm.jsx    ← Formulario para agregar materias
-│   ├── hooks/
-│   │   └── useAppData.js      ← Hook personalizado para localStorage
-│   ├── pages/
-│   │   └── index.jsx          ← Landing, Horarios, Calculadora, Ajustes
-│   ├── utils/
-│   │   ├── colors.js          ← Paleta de colores pastel por materia
-│   │   ├── constants.js       ← Días L,M,X,J,V,S
-│   │   ├── genId.js           ← Generador de IDs únicos
-│   │   ├── pdf.js             ← Exportación a PDF (jsPDF)
-│   │   └── time.js            ← Conversión de horas y generación de slots
-│   ├── App.jsx                ← Componente raíz + lógica de navegación
-│   ├── index.css              ← Variables CSS (modo claro/oscuro) + estilos globales
-│   └── main.jsx               ← Punto de entrada React
-├── index.html
-├── vite.config.js
-├── package.json
-└── .gitignore
-```
+Construida con React y Vite. Sin backend ni dependencias a servicios externos.
 
 ---
 
-## 🚀 Cómo arrancar el proyecto
+## Qué hace
 
-### Requisitos previos
-- [Node.js](https://nodejs.org/) versión **18 o superior**
-- Un terminal (CMD, PowerShell, Terminal de macOS, etc.)
+**Constructor de horarios** — Crea un horario semanal agregando materias con sus días, horario de inicio y fin, y número de créditos. A cada materia se le asigna un color automáticamente. El calendario renderiza todos los bloques de forma proporcional en una cuadrícula de lunes a sábado con resolución de 30 minutos.
 
-### Pasos
+**Exportar a PDF** — Descarga el horario como un PDF en A4 horizontal. El resultado recorta las horas vacías, muestra cada bloque con su rango horario y créditos, e incluye una leyenda con todas las materias y sus colores al pie de la página.
+
+**Calculadora de notas** — Por cada materia se definen cortes de evaluación (parciales, finales, trabajos) con sus respectivos porcentajes. Al ingresar las notas obtenidas, la calculadora muestra la nota acumulada y el puntaje exacto que se necesita en los cortes pendientes para aprobar.
+
+**Múltiples semestres** — Los horarios y calculadoras se almacenan de forma independiente. Se pueden tener tantos como se necesiten y alternar entre ellos libremente.
+
+**Modo oscuro** — Alternancia completa entre tema claro y oscuro, implementada con CSS custom properties.
+
+**Local-first** — Todos los datos se guardan en `localStorage`. No se envía ninguna información a ningún servidor.
+
+---
+
+## Stack tecnológico
+
+- [React 18](https://react.dev/)
+- [Vite 5](https://vitejs.dev/)
+- [jsPDF 2](https://github.com/parallax/jsPDF) — generación de PDFs en el cliente
+- CSS con custom properties — sin framework de UI
+
+---
+
+## Correr localmente
+
+**Requisito:** Node.js 18 o superior.
 
 ```bash
-# 1. Entra a la carpeta del proyecto
+git clone https://github.com/TU-USUARIO/todouni.git
 cd todouni
-
-# 2. Instala las dependencias (solo la primera vez)
 npm install
-
-# 3. Arranca el servidor de desarrollo
 npm run dev
 ```
 
-Luego abre tu navegador en **http://localhost:5173** y listo. 🎉
-
-> Para detener el servidor: presiona `Ctrl + C` en la terminal.
+Abre `http://localhost:5173` en el navegador.
 
 ---
 
-## 🏗️ Generar versión de producción (build)
+## Build de producción
 
 ```bash
 npm run build
 ```
 
-Esto crea una carpeta `dist/` con los archivos optimizados listos para subir a un servidor.
+El resultado se escribe en `dist/`. Puede servirse desde cualquier host de archivos estáticos.
 
 ---
 
-## 🐙 Cómo subir a GitHub y publicar con GitHub Pages
+## Estructura del proyecto
 
-### Paso 1 — Crear el repositorio en GitHub
-
-1. Ve a [github.com](https://github.com) → **New repository**
-2. Nombre del repo: `todouni` *(debe coincidir con `base` en `vite.config.js`)*
-3. Déjalo **público** si quieres que sea visible como proyecto personal
-4. NO marques "Initialize with README" (ya tienes uno)
-5. Clic en **Create repository**
-
-### Paso 2 — Conectar tu carpeta local con GitHub
-
-```bash
-# Dentro de la carpeta todouni/:
-
-git init
-git add .
-git commit -m "🎓 Initial commit — TODOUNI"
-
-# Reemplaza TU-USUARIO con tu nombre de usuario de GitHub
-git remote add origin https://github.com/TU-USUARIO/todouni.git
-git branch -M main
-git push -u origin main
 ```
-
-### Paso 3 — Instalar el plugin para desplegar en GitHub Pages
-
-```bash
-npm install --save-dev gh-pages
-```
-
-Luego agrega estos scripts en `package.json`:
-
-```json
-"scripts": {
-  "dev":      "vite",
-  "build":    "vite build",
-  "preview":  "vite preview",
-  "predeploy": "npm run build",
-  "deploy":   "gh-pages -d dist"
-}
-```
-
-### Paso 4 — Publicar
-
-```bash
-npm run deploy
-```
-
-Esto:
-1. Hace el build automáticamente
-2. Sube la carpeta `dist/` a la rama `gh-pages` de tu repositorio
-
-### Paso 5 — Activar GitHub Pages
-
-1. Ve a tu repositorio en GitHub → **Settings** → **Pages**
-2. En *Branch*, selecciona `gh-pages` → carpeta `/ (root)`
-3. Clic en **Save**
-
-En unos minutos tu app estará disponible en:
-```
-https://TU-USUARIO.github.io/todouni/
+src/
+├── components/
+│   ├── CalendarGrid.jsx   # Calendario semanal con bloques posicionados absolutamente
+│   ├── Icons.jsx          # Componentes de iconos SVG inline
+│   ├── Navbar.jsx         # Barra de navegación
+│   └── SubjectForm.jsx    # Formulario para agregar materias a un horario
+├── hooks/
+│   └── useAppData.js      # Hook personalizado para lectura y escritura en localStorage
+├── pages/
+│   └── index.jsx          # Todas las páginas: Landing, Horarios, Calculadora, Ajustes
+├── utils/
+│   ├── colors.js          # Paleta de colores por materia (variantes claro, oscuro y PDF)
+│   ├── constants.js       # Definición de días de la semana y mapeo a Date.getDay()
+│   ├── genId.js           # Generador de IDs únicos
+│   ├── pdf.js             # Lógica de layout y renderizado del PDF
+│   └── time.js            # Utilidades de conversión de horas y generación de slots
+├── App.jsx                # Componente raíz y enrutamiento entre páginas
+└── index.css              # Estilos globales y variables CSS de tema
 ```
 
 ---
 
-## 🔄 Actualizar la app en producción
+## Licencia
 
-Cada vez que hagas cambios y quieras publicarlos:
-
-```bash
-# 1. Guarda tus cambios en Git
-git add .
-git commit -m "descripción de los cambios"
-git push
-
-# 2. Despliega la nueva versión
-npm run deploy
-```
-
----
-
-## ✨ Funcionalidades
-
-| Función | Descripción |
-|---|---|
-| 📅 Horarios | Crea múltiples horarios (uno por semestre) |
-| 🌈 Vista calendario | Bloques de color por materia, franjas de 30 min, L–S |
-| 📄 PDF | Exporta el horario recortando horas vacías |
-| 🧮 Calculadora | Cortes configurables, calcula cuánto necesitas para pasar |
-| 🌙 Modo oscuro | Toggle claro/oscuro con CSS variables |
-| 💾 localStorage | Sin servidor, sin cuenta |
-
----
-
-## 🛠️ Tecnologías
-
-- [React 18](https://react.dev/)
-- [Vite 5](https://vitejs.dev/)
-- [jsPDF](https://github.com/parallax/jsPDF) — generación de PDFs
-- CSS Variables (sin framework de UI externo)
-
----
-
-*Hecho con 💜 para estudiantes universitarios*
+MIT
