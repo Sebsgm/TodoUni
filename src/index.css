@@ -1,0 +1,123 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg-page);
+  color: var(--text-pri);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+:root {
+  --bg-page:     #F6F2FF;
+  --bg-card:     #FFFFFF;
+  --bg-card2:    #EDE8FF;
+  --bg-card3:    #F9F6FF;
+  --text-pri:    #1A0E3F;
+  --text-sec:    #5B4B8A;
+  --text-mut:    #9987C4;
+  --accent:      #7C3AED;
+  --accent-h:    #6D28D9;
+  --accent-soft: #EDE9FE;
+  --border:      #E2D9F3;
+  --border-s:    #C4B5FD;
+  --shadow:      0 1px 6px rgba(124,58,237,.08);
+  --shadow-lg:   0 6px 28px rgba(124,58,237,.14);
+  --success:     #059669;
+  --warning:     #D97706;
+  --danger:      #DC2626;
+  --grid-line:   #EAE4FF;
+  --grid-half:   #F4F0FF;
+}
+
+[data-dark="true"] {
+  --bg-page:     #0C0918;
+  --bg-card:     #16102A;
+  --bg-card2:    #1E1840;
+  --bg-card3:    #120D22;
+  --text-pri:    #EDE8FF;
+  --text-sec:    #9D88D4;
+  --text-mut:    #5E4E8A;
+  --accent:      #A78BFA;
+  --accent-h:    #8B5CF6;
+  --accent-soft: #221A42;
+  --border:      #2A2050;
+  --border-s:    #4C3A8A;
+  --shadow:      0 1px 6px rgba(0,0,0,.3);
+  --shadow-lg:   0 6px 28px rgba(0,0,0,.45);
+  --grid-line:   #221A40;
+  --grid-half:   #1A1438;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-s); border-radius: 4px; }
+
+/* Form elements */
+input, button, select, textarea {
+  font-family: 'Outfit', sans-serif;
+}
+input[type="time"]::-webkit-calendar-picker-indicator {
+  opacity: .45;
+  cursor: pointer;
+  filter: var(--icon-filter, none);
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  opacity: .5;
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-in { animation: fadeUp .25s ease both; }
+
+/* Cards */
+.card-hover {
+  transition: transform .16s ease, box-shadow .16s ease;
+}
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Toggle */
+.toggle-track {
+  width: 48px;
+  height: 26px;
+  border-radius: 13px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: background .22s;
+  flex-shrink: 0;
+}
+.toggle-thumb {
+  position: absolute;
+  top: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 1px 4px rgba(0,0,0,.22);
+  transition: left .22s;
+}
+
+/* Focus visible */
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Day columns in CalendarGrid */
+.day-short { display: none; }
+.day-full  { display: block; }
+
+@media (max-width: 600px) {
+  .day-short { display: block; }
+  .day-full  { display: none; }
+}
